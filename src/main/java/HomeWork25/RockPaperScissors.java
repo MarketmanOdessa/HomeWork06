@@ -1,4 +1,4 @@
-package HomeWork24;
+package HomeWork25;
 
 
 
@@ -48,7 +48,8 @@ public class RockPaperScissors {
             inputScanner = new Scanner(System.in);
         }
         public Move getMove() {
-            System.out.println("Сделайте ваш ход " + userName + ": (К, Н, Б). " + " Или остановите игру: (Х).");
+         //   System.out.println("Сделайте ваш ход " + userName + ": (К, Н, Б). " + " Или остановите игру: (Х).");
+            System.out.println(rb.getString("move"));
             String userInput = inputScanner.nextLine();
             userInput = userInput.toUpperCase();
             char firstLetter = userInput.charAt(0);
@@ -90,31 +91,38 @@ public class RockPaperScissors {
     public void startGame() throws IOException {
         if (numberOfGames==0) {
             Scanner inputScanner = new Scanner(System.in);
-            LoggerDebug.info("Пользователь вошел в игру");
-         //   LoggerDebug.info(rb.getString("gameEntry"));
-            System.out.println("Введите ваше имя:");
+          //  LoggerDebug.info("Пользователь вошел в игру");
+          //  LoggerDebug.info(rb.getString("gameEntry"));
+            System.out.println(rb.getString("gameEntry"));
+           System.out.println(rb.getString("name"));
+        //    LoggerDebug.info(rb.getString("name"));
             userName = inputScanner.nextLine();
-            System.out.println(userName + ", какое количество игр вы хотите сыграть?");
+         //   System.out.println(userName + ", какое количество игр вы хотите сыграть?");
+         //   LoggerDebug.info(rb.getString("numberOfGames"));
+            System.out.println(rb.getString("numberOfGames"));
             maxNumberOfGames = Integer.parseInt(inputScanner.nextLine());
             LoggerDebug.info("Пользователь выбрал количество игр: " + maxNumberOfGames);
         }
         Move userMove = user.getMove();
         Move computerMove = computer.getMove();
       //  System.out.println("\nВаш ход " + userMove + ".");
-      //  System.out.println("Ход компьютера " + computerMove + ".\n");
-        LoggerDebug.info("\nВаш ход " + userMove + ".");
-        LoggerDebug.info("Ход компьютера " + computerMove + ".\n");
-
+     //   System.out.println("Ход компьютера " + computerMove + ".\n");
+      //  LoggerDebug.info("\nВаш ход " + userMove + ".");
+     //   LoggerDebug.info("Ход компьютера " + computerMove + ".\n");
+        LoggerDebug.info(rb.getString("userMove") + userMove + ".");
+        LoggerDebug.info(rb.getString("computerMove") + computerMove + ".\n");
+        System.out.println(rb.getString("userMove") + userMove + ".");
+        System.out.println(rb.getString("computerMove") + computerMove + ".\n");
 
         int compareMoves = userMove.compareMoves(computerMove);
         switch (compareMoves) {
-            case 0 -> System.out.println("Ничья");
+            case 0 -> System.out.println(rb.getString("draw"));
             case 1 -> {
-                System.out.println(userMove + " beats " + computerMove + ". Вы победили!");
+                System.out.println(userMove + " beats " + computerMove + rb.getString("win"));
                 userScore++;
             }
             case -1 -> {
-                System.out.println(computerMove + " beats " + userMove + ". Вы проиграли.");
+                System.out.println(computerMove + " beats " + userMove + rb.getString("lose"));
                 computerScore++;
             }
         }
@@ -128,8 +136,9 @@ public class RockPaperScissors {
         } else {
             printGameStats();
             System.out.println();
-            System.out.print("Игра окончена. По итогам " + numberOfGames + " игр победитель: ");
-            System.out.println(userScore<computerScore ? "Компьютер" : userName);
+        //    System.out.print("Игра окончена. По итогам " + numberOfGames + " игр победитель: ");
+            System.out.println(rb.getString("gameOver"));
+         //   System.out.println(userScore<computerScore ? "Компьютер" : userName);
             LoggerDebug.info("Пользователь вышел из игры");
         }
     }

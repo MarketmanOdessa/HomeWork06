@@ -11,6 +11,9 @@
 <!--    <logger name="console_logger">-->
 <!--        <appender-ref ref="STDOUT"/>-->
 <!--    </logger>-->
+    <logger name="console_logger">
+        <appender-ref ref="console"/>
+    </logger>
     <appender name="result"
               class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>${LOG_FOLDER}/result.log</file>
