@@ -1,12 +1,21 @@
-package HomeWork16;
+package HomeWork24;
+
+
 
 import java.io.*;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
+import java.util.Locale;
 import java.util.Random;
+import java.util.ResourceBundle;
 import java.util.Scanner;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+
+
 
 public class RockPaperScissors {
     private final User user;
@@ -16,6 +25,10 @@ public class RockPaperScissors {
     private int computerScore;
     private int numberOfGames;
     private int maxNumberOfGames;
+
+    private static final Logger LoggerDebug = LoggerFactory.getLogger("result");
+
+    static ResourceBundle rb;
 
     private enum Move {
         ROCK, PAPER, SCISSORS;
@@ -77,15 +90,21 @@ public class RockPaperScissors {
     public void startGame() throws IOException {
         if (numberOfGames==0) {
             Scanner inputScanner = new Scanner(System.in);
+            LoggerDebug.info("Пользователь вошел в игру");
+         //   LoggerDebug.info(rb.getString("gameEntry"));
             System.out.println("Введите ваше имя:");
             userName = inputScanner.nextLine();
             System.out.println(userName + ", какое количество игр вы хотите сыграть?");
             maxNumberOfGames = Integer.parseInt(inputScanner.nextLine());
+            LoggerDebug.info("Пользователь выбрал количество игр: " + maxNumberOfGames);
         }
         Move userMove = user.getMove();
         Move computerMove = computer.getMove();
-        System.out.println("\nВаш ход " + userMove + ".");
-        System.out.println("Ход компьютера " + computerMove + ".\n");
+      //  System.out.println("\nВаш ход " + userMove + ".");
+      //  System.out.println("Ход компьютера " + computerMove + ".\n");
+        LoggerDebug.info("\nВаш ход " + userMove + ".");
+        LoggerDebug.info("Ход компьютера " + computerMove + ".\n");
+
 
         int compareMoves = userMove.compareMoves(computerMove);
         switch (compareMoves) {
@@ -100,6 +119,8 @@ public class RockPaperScissors {
             }
         }
         numberOfGames++;
+        int leftGames = maxNumberOfGames - numberOfGames;
+        LoggerDebug.info("Пользователь сыграл " + numberOfGames + " игр. Осталось сыграть: " + leftGames + " игр.");
 
         if (numberOfGames < maxNumberOfGames) {
             System.out.println();
@@ -109,6 +130,7 @@ public class RockPaperScissors {
             System.out.println();
             System.out.print("Игра окончена. По итогам " + numberOfGames + " игр победитель: ");
             System.out.println(userScore<computerScore ? "Компьютер" : userName);
+            LoggerDebug.info("Пользователь вышел из игры");
         }
     }
 
@@ -162,17 +184,15 @@ public class RockPaperScissors {
             Files.write(Path.of(s + File.separator.concat(fileName)), pgs.getBytes(), StandardOpenOption.APPEND);
         }
     }
-
     private void printDashes(int numberOfDashes) {
         for (int i = 0; i < numberOfDashes; i++) {
             System.out.print("-");
         }
     }
-
     public static void main(String[] args) throws IOException {
+        rb = ResourceBundle.getBundle("langu", new Locale(args[0]));
         RockPaperScissors game = new RockPaperScissors();
         game.startGame();
+
     }
-
-
 }
