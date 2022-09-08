@@ -7,6 +7,7 @@ public class DepositCalculator {
         int years = Integer.parseInt(args[2]);
         calc(UAH, percent,years);
     }
+
     public static void calc (double money, double p, int y) {
         for (int i = 1; i <= y; i++) {
             System.out.println("Накопленная сумма денег за " + i + " год(а): " + String.format("%.2f",money*(Math.pow(1+(p/100),i))));
