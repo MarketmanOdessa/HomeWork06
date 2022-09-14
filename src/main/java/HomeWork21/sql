@@ -1,0 +1,71 @@
+-- Table: Баллы
+CREATE TABLE Баллы (
+    "Код балла" int NOT NULL,
+    Занятие int NOT NULL,
+    Студент int NOT NULL,
+    Балл int NOT NULL,
+    CONSTRAINT Баллы_pk PRIMARY KEY ("Код балла")
+);
+
+-- Table: Группы
+CREATE TABLE Группы (
+    "Код группы" int NOT NULL,
+    Группа text NULL,
+    CONSTRAINT Группы_pk PRIMARY KEY ("Код группы")
+);
+
+-- Table: Занятия
+CREATE TABLE Занятия (
+    "Код занятия" int NOT NULL,
+    Наименование varchar(15) NOT NULL,
+    Преподаватель int NOT NULL,
+    Семестр int NOT NULL,
+    Год int NOT NULL,
+    CONSTRAINT Занятия_pk PRIMARY KEY ("Код занятия")
+);
+
+-- Table: Кафедры
+CREATE TABLE Кафедры (
+    "Код кафедры" int NOT NULL,
+    Название varchar(15) NOT NULL,
+    Заведующий varchar(15) NOT NULL,
+    CONSTRAINT Кафедры_pk PRIMARY KEY ("Код кафедры")
+);
+
+-- Table: Преподаватели
+CREATE TABLE Преподаватели (
+    "Код преподавателя" int NOT NULL,
+    ФИО varchar(15) NOT NULL,
+    Кафедра int NOT NULL,
+    CONSTRAINT Преподаватели_pk PRIMARY KEY ("Код преподавателя")
+);
+
+-- Table: Студенты
+CREATE TABLE Студенты (
+    "Код студента" int NOT NULL,
+    ФИО varchar(50) NOT NULL,
+    Группа int NOT NULL,
+    "Год поступления" int NOT NULL,
+    CONSTRAINT Студенты_pk PRIMARY KEY ("Код студента")
+);
+
+-- foreign keys
+-- Reference: Баллы (table: Баллы)
+ALTER TABLE Баллы ADD CONSTRAINT Баллы_Студент FOREIGN KEY ("Студент")
+    REFERENCES Студенты ("Код студента");
+
+-- Reference: Баллы_Занятия (table: Баллы)
+ALTER TABLE Баллы ADD CONSTRAINT Баллы_Занятия FOREIGN KEY (Занятие)
+    REFERENCES Занятия ("Код занятия");
+
+-- Reference: Занятия_Преподаватели (table: Занятия)
+ALTER TABLE Занятия ADD CONSTRAINT Занятия_Преподаватели FOREIGN KEY (Преподаватель)
+    REFERENCES Преподаватели ("Код преподавателя");
+
+-- Reference: Преподаватели_Кафедры (table: Преподаватели)
+ALTER TABLE Преподаватели ADD CONSTRAINT Преподаватели_Кафедры FOREIGN KEY (Кафедра)
+    REFERENCES Кафедры ("Код кафедры");
+
+-- Reference: Студенты_Группы (table: Студенты)
+ALTER TABLE Студенты ADD CONSTRAINT Студенты_Группы FOREIGN KEY (Группа)
+    REFERENCES Группы ("Код группы");
