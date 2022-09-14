@@ -1,3 +1,4 @@
+
 -- Table: Баллы
 CREATE TABLE Баллы (
     "Код балла" int NOT NULL,
